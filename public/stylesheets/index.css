@@ -1,0 +1,13 @@
+body {
+    padding: 50px;
+}
+
+p {
+    margin: 10px 0px 50px 0px;
+}
+
+.btns-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

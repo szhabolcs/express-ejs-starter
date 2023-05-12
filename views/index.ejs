@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/global.css' />
+  <link rel='stylesheet' href='/stylesheets/index.css' />
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+
+  <div class="btns-wrapper">
+    <button onclick="location.href='/db-test'">
+      Check Database status
+      <span class="material-symbols-rounded">arrow_right_alt</span>
+    </button>
+
+    <button onclick="location.href='/error'" style="background-color: #ff6e63;">
+      Check error page
+      <span class="material-symbols-rounded">arrow_right_alt</span>
+    </button>
+  </div>
+</body>
+
+</html>

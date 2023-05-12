@@ -1,0 +1,9 @@
+{
+    "watch": [
+        "./"
+    ],
+    "ext": "js, json, ejs, .env",
+    "execMap": {
+        "js": "cross-env DEBUG=twitter-clone:server node"
+    }
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Error</title>
+  <link rel='stylesheet' href='/stylesheets/global.css' />
+</head>
+
+<body>
+  <h1>Database status</h1>
+  <% if (connected) { %>
+  <span style="color: #4CAF50;font-weight: 600;">Database is connected</span>
+  <% } else { %>
+  <span style="color: #ff6e63;font-weight: 600;">Database is not connected</span>
+  <% } %>
+</body>
+
+</html>

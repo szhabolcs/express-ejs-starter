@@ -30,7 +30,7 @@ app.use('/db-test', dbTestRouter);
 
 // if none of the above match, catch 404 and forward to error handler
 app.use((req, _res, next) => {
-  next(createError(404, `${req.originalUrl} does not exist`)); // next sends it to the next app.use() function
+  next(createError(404, `${req.path} does not exist`)); // next sends it to the next app.use() function
 });
 
 // error handler

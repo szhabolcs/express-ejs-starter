@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+span {
+    font-weight: 600;
+}
+
+.good-msg {
+    color: #4CAF50;
+}
+
+.bad-msg {
+    color: #ff6e63;
+}

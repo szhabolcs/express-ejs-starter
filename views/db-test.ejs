@@ -4,14 +4,15 @@
 <head>
   <title>Error</title>
   <link rel='stylesheet' href='/stylesheets/global.css' />
+  <link rel='stylesheet' href='/stylesheets/db-test.css' />
 </head>
 
 <body>
   <h1>Database status</h1>
   <% if (connected) { %>
-  <span style="color: #4CAF50;font-weight: 600;">Database is connected</span>
+  <span class="good-msg">Database is up and running!</span>
   <% } else { %>
-  <span style="color: #ff6e63;font-weight: 600;">Database is not connected</span>
+  <span class="bad-msg">There is something wrong with the database, check the logs.</span>
   <% } %>
 </body>
 

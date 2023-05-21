@@ -1,5 +1,5 @@
-import createError from "http-errors";
 import express, { json, urlencoded } from "express";
+import 'express-async-errors'; // catch async errors in the error handling middleware
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import path from "path";
@@ -7,6 +7,8 @@ import { fileURLToPath } from 'url';
 
 import indexRouter from "./routes/index.js";
 import dbTestRouter from './routes/db-test.js';
+import errorHandler from "./middlewares/error-handler.js";
+import undefinedPage from "./middlewares/undefined-page.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,19 +31,9 @@ app.use('/', indexRouter);
 app.use('/db-test', dbTestRouter);
 
 // if none of the above match, catch 404 and forward to error handler
-app.use((req, _res, next) => {
-  next(createError(404, `${req.path} does not exist`)); // next sends it to the next app.use() function
-});
+app.use(undefinedPage);
 
 // error handler
-app.use((err, req, res, _next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use(errorHandler);
 
 export default app;

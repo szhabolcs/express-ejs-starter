@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { getClient } from "../db/config.js";
-import { debug } from "../utils/logging.js";
+import logger from "../utils/logging.js";
 
 const sequelize = getClient();
 const User = sequelize.define('User', {
@@ -19,7 +19,7 @@ await User.sync();
 
 async function tableExists() {
     const tableNames = await sequelize.getQueryInterface().showAllTables();
-    debug(tableNames);
+    logger.debug(tableNames);
     
     return tableNames.includes('User');
 }

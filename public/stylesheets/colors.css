@@ -1,0 +1,21 @@
+/* Dark theme colors */
+:root {
+    --bg-color: #333333;
+    --text-color: #FFFFFF;
+    
+    --btn-default-bg: #b5b5b5;
+    --btn-default-color: #1a1a1a;
+    --btn-primary-bg: #2196F3;
+    --btn-danger-bg: #ff6e63;
+
+    --text-highlight-bg: var(--text-color);
+    --text-highlight-color: var(--bg-color);
+}
+
+/* Override the default colors for light mode */
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-color: #FFFFFF;
+        --text-color: #333333;
+    }
+}

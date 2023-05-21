@@ -5,25 +5,48 @@
   <title><%= title %></title>
   <link rel='stylesheet' href='/stylesheets/global.css' />
   <link rel='stylesheet' href='/stylesheets/index.css' />
-  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
 </head>
 
 <body>
+  <div id="logos-wrapper">
+    <img src="/images/expressjs.png" alt="expressjs logo">
+    <img src="/images/ejs.png" alt="ejs logo">
+  </div>
+
   <h1><%= title %></h1>
-  <p>Welcome to <%= title %></p>
+  <p>Check the <span class="highlight">README.md</span> for more info.</p>
 
   <div class="btns-wrapper">
-    <button onclick="location.href='/db-test'">
+    <a class="btn btn-primary" href='/db-test'>
       Check Database status
-      <span class="material-symbols-rounded">arrow_right_alt</span>
-    </button>
+      <i class="fa-solid fa-arrow-right-long"></i>
+    </a>
 
-    <button onclick="location.href='/error'" style="background-color: #ff6e63;">
+    <a class="btn btn-danger" href='/error'>
       Check error page
-      <span class="material-symbols-rounded">arrow_right_alt</span>
+      <i class="fa-solid fa-arrow-right-long"></i>
+    </a>
+  </div>
+
+  <div class="btns-wrapper" style="margin-top: 10px;">
+    <a class="btn" target="_blank" href="https://expressjs.com/en/4x/api.html">
+      ExpressJS DOCS
+      <i class="fa-solid fa-circle-info"></i>
+    </a>
+
+    <a class="btn" target="_blank" href="https://ejs.co/#docs">
+      EJS DOCS
+      <i class="fa-solid fa-circle-info"></i>
+    </a>
+    <button id="feeling-lucky-btn">
+      I'm feeling lucky
+      <i class="fa-solid fa-clover"></i>
     </button>
   </div>
+
+  <img id="cat-gif" src="https://cataas.com/cat/gif" alt="cat gif">
+
+  <script src="/javascripts/index.js"></script>
 </body>
 
 </html>

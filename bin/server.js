@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 import app from '../app.js';
-import { debug } from '../utils/logging.js';
+import logger from '../utils/logging.js';
 import { createServer } from 'http';
 
 /**
@@ -84,8 +84,8 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   if (typeof addr === 'string') {
-    debug(`Listening on ${bind}`);
+    logger.debug(`Listening on ${bind}`);
   } else {
-    debug(`Server started at http://localhost:${addr.port}`);
+    logger.debug(`Server started at http://localhost:${addr.port}`);
   }
 }

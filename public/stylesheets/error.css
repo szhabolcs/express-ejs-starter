@@ -3,5 +3,5 @@ body {
 }
 
 h1 {
-    color: #ff6e63;
+    color: var(--color-danger);
 }

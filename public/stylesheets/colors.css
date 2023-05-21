@@ -3,10 +3,12 @@
     --bg-color: #333333;
     --text-color: #FFFFFF;
     
+    --color-danger: #ff6e63;
+    
     --btn-default-bg: #b5b5b5;
     --btn-default-color: #1a1a1a;
     --btn-primary-bg: #2196F3;
-    --btn-danger-bg: #ff6e63;
+    --btn-danger-bg: var(--color-danger);
 
     --text-highlight-bg: var(--text-color);
     --text-highlight-color: var(--bg-color);

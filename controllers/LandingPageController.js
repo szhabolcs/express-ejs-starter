@@ -6,7 +6,5 @@ function landingPage(_req, res, _next) {
 }
 
 export default {
-    views: {
-        landingPage
-    }
+    landingPage
 }

@@ -3,6 +3,6 @@ import LandingPageController from "../controllers/LandingPageController.js";
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', LandingPageController.views.landingPage);
+router.get('/', LandingPageController.landingPage);
 
 export default router;

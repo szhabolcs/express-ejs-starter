@@ -72,12 +72,11 @@ We can see that it does, because we’ve set it inside the `app.js` file:
 2. So it’s going to call the `dbTestRouter`
 At the top of the file, we can see the line: `import dbTestRouter from './routes/db-test.js'` which means, that the router comes from the `db-test` file inside the `routes` folder
 3. In this file, we can see that the variable `router` is exported. This router is called, and it checks if the requested path matches any paths that have been set.
-We can see that in our file, we’ve set the `/` path using `router.get('/', DBTestController.testPage)`, which just means the root of the router. This is exactly what our user wants, because `/db-test` is equal to `/db-test/`
-
-ℹ️ We’re using the following pattern: `localhost:3000`/`router`/`path`
+We can see that in our file, we’ve set the `/` path using `router.get('/', DBTestController.testPage)`, which just means the root of the router. This is exactly what our user wants, because `/db-test` is equal to `/db-test/` 
+<br> ℹ️ We’re using the following pattern: `localhost:3000`/`router`/`path`
 4. Now, the router is going to call the `DBTestController`'s `testPage` function.
 This function checks if the User table exists. This is just a dummy test to check if the database is up and running. After checking, the `db-test` page is rendered, and sent right back to the user.
-ℹ️ We send some data to the page, using the `res.locals` variable.
+<br> ℹ️ We send some data to the page, using the `res.locals` variable.
 We can then use the variables provided inside the .ejs file:
 `… <% if (connected) { %> …`
 

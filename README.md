@@ -1,10 +1,11 @@
 # Express + EJS Starter
 
+![screenshot](https://github.com/szhabolcs/twitter-clone/assets/54114237/cdc3c618-b9de-42cb-8e1a-0f9522773099)
+
 The project uses the MVC pattern where **models** are handled using Sequalize and the **views** by EJS. These two are linked using **controllers**.
+<br> In addition, Express is used for managing routes, and calling controllers.
 
 # Project structure
-
-In addition, Express is used for managing routes, and calling controllers.
 
 | Folder/File | Description |
 | --- | --- |

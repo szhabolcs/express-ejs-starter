@@ -135,7 +135,7 @@ Use the following checklist when making a new page:
 ## Example: creating a new router
 
 1. Create a `test.ejs` file inside the `views` folder, with the following boilerplate:
-ℹ️ Using `<%= message %>` the page expects the controller to set a variable called `message`, check step 3 
+<br> ℹ️ Using `<%= message %>` the page expects the controller to set a variable called `message`, check step 3 
     
     ```html
     <!-- ./views/test.ejs -->

@@ -1,6 +1,6 @@
 # Express + EJS Starter
 
-![screenshot](https://github.com/szhabolcs/twitter-clone/assets/54114237/cdc3c618-b9de-42cb-8e1a-0f9522773099)
+![screenshot](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/0a2564e7-9e70-4411-ab26-a286f5fc76a7)
 
 The project uses the MVC pattern where **models** are handled using Sequalize and the **views** by EJS. These two are linked using **controllers**.
 <br> In addition, Express is used for managing routes, and calling controllers.
@@ -48,7 +48,7 @@ If everything works correctly, the message *Server started at http://localhost:3
 
 The path of the request is as follows:
 
-|![image](https://github.com/szhabolcs/twitter-clone/assets/54114237/88f8f378-379a-48b3-b30a-2e5379932c86)|
+|![image](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/8aff7082-d324-4a93-8042-857664d16266)|
 |:--:|
 |[https://excalidraw.com/#json=88vxzAU1tL0MwlqdGp_ws,VE2CkmH2oWItfEY3qjeJwQ](https://excalidraw.com/#json=88vxzAU1tL0MwlqdGp_ws,VE2CkmH2oWItfEY3qjeJwQ)|
 
@@ -60,7 +60,7 @@ We can see that the following steps take place:
 
 Now let’s see a concrete example:
 
-|![image](https://github.com/szhabolcs/twitter-clone/assets/54114237/1206b177-b369-4012-a0e6-6eb913d53e74)|
+|![image](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/0c50b768-b42f-485c-b71c-566bfac5be3f)|
 |:--:|
 |[https://excalidraw.com/#json=4KSPNVorCpccRmMSgLj44,rFj-tyQkFRA4Qt95-sss5Q](https://excalidraw.com/#json=rrp1BKKHIDfiS2fdJmjkD,ixhy0kzUIj4YboXUB275hg)|
 

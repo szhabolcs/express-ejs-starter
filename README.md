@@ -29,7 +29,7 @@ The setup process is pretty simple. All you have to do is:
 
 1. Run `npm install` from the root of the project
 2. Create a `.env` file, inside the root
-You can copy over the config from `.env.example` to get started
+<br> You can copy over the config from `.env.example` to get started
 
 Now you’re ready to run the project!
 

@@ -117,7 +117,7 @@ If you want, you can make more cunstom errors inside the `./utils/custom-errors.
 
 ### Debugging
 In order to start the server in debug mode, go inside the `./package.json` file, hover over the script that you want to run, and click `Debug Script`:
-
+<br>![NPM script debugging](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/9af53e78-389a-44d9-aaf1-b9b1785ee770)
 
 If that method isn't working, you can do the following: 
 <br>

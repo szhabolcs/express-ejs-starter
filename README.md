@@ -176,7 +176,7 @@ You can use this checklist once you're familiar with the project.
     
     ```js
     // ./controllers/TestController.js
-    async function testPage(_req, res, _next) {
+    async function testPage(req, res, next) {
         // variables sent to the view
         res.locals = {
             message: "Hello World!"
@@ -263,7 +263,7 @@ You can use this checklist once you're familiar with the project.
     
     ```js
     // ./controllers/TestController.js
-    async function testPage(_req, res, _next) {
+    async function testPage(req, res, next) {
         res.locals = {
             message: "Hello World!"
         };
@@ -271,7 +271,7 @@ You can use this checklist once you're familiar with the project.
     }
     
     // New function 👇
-    async function fooPage(_req, res, _next) {
+    async function fooPage(req, res, next) {
         res.render('foo');
     }
     

@@ -82,30 +82,34 @@ We can then use the variables provided inside the .ejs file:
 
 # Creating a new page
 
-Use the following checklist when making a new page:
+You can use this checklist once you're familiar with the project.
+<br>But if you're just starting out, refer to one of the examples in the next section.
 
-- [ ]  Create a new `ejs` file inside the `views` folder
-- [ ]  Specify at what path the file should be loaded
+### Use the following checklist when making a new page:
+
+1. Create a new `<page-name>.ejs` file inside the `views` folder
+2. Specify at what path the file should be loaded
+    #### If you’re adding a new path to an existing router:
     
-    If you’re adding a new path to a router:
+    1. Create a new function that will render the page, and don't forget to call `res.render('<page-name>')`
+    2. Specify the path where the function will be called
+    ---
     
-    - [ ]  Create a new function that will render the page inside the desired router’s controller, and call `res.render('<page-name>')`
-    - [ ]  Specify the previous function inside the router, at the desired path
+    #### If you’re making a new router:
     
-    If you’re making a new router:
-    
-    - [ ]  Create a new `js` file inside the routes folder, with the following boilerplate:
+    1. Create a new `<router-name>.js` file inside the `routes` folder, with the following code:
         
         ```js
-        // ./routes/test.js
+        // ./routes/<router-name>.js
         import express from "express";
         const router = express.Router();
         
         export default router;
         ```
         
-    - [ ]  Create a new `js` file inside the controllers folder
-    - [ ]  Import the controller inside the router
+    2. Create a new `<controller-name>.js` file inside the `controllers` folder
+
+    3. Import the controller inside the router
         
         ```js
         // ./routes/test.js
@@ -115,10 +119,10 @@ Use the following checklist when making a new page:
         
         export default router;
         ```
-        
+
         ℹ️ The `ControllerName` in the router file, has to match the one we just created
         
-    - [ ]  Specify the router inside the `app.js` file:
+    4. Specify the router inside the `app.js` file:
         
         ```js
         // ./app.js
@@ -130,11 +134,13 @@ Use the following checklist when making a new page:
         
         ℹ️ The naming convention used is just a guide. You can use whatever you like
         
-    - [ ]  Create a new function that will render the page inside the controller, and call `res.render('<page-name>')`
+    5. Create a new function that will render the page inside the controller, and call `res.render('<page-name>')`
 
-## Example: creating a new router
+## Examples
 
-1. Create a `test.ejs` file inside the `views` folder, with the following boilerplate:
+### Creating a new router
+
+1. Create a `test.ejs` file inside the `views` folder, with the following code:
 <br> ℹ️ Using `<%= message %>` the page expects the controller to set a variable called `message`, check step 3 
     
     ```html
@@ -145,6 +151,9 @@ Use the following checklist when making a new page:
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- More info about global.css at the Customization section -->
+        <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Test page</title>
     </head>
     <body>
@@ -153,7 +162,7 @@ Use the following checklist when making a new page:
     </html>
     ```
     
-2. Create a `test.js` file inside the `routes` folder, with the following boilerplate:
+2. Create a `test.js` file inside the `routes` folder, with the following code:
     
     ```js
     // ./routes/test.js
@@ -163,15 +172,17 @@ Use the following checklist when making a new page:
     export default router;
     ```
     
-3. Create a `TestController.js` file inside the `controllers` folder.
-We will use the following boilerplate:
+3. Create a `TestController.js` file inside the `controllers` folder, with the following code:
     
     ```js
     // ./controllers/TestController.js
     async function testPage(_req, res, _next) {
+        // variables sent to the view
         res.locals = {
             message: "Hello World!"
         };
+
+        // name of the .ejs file to show
         res.render('test');
     }
     
@@ -186,7 +197,8 @@ We will use the following boilerplate:
     
     ```js
     // ./routes/test.js
-    import testController from "../controllers/TestController.js";
+    // Controller import 👇
+    import TestController from "../controllers/TestController.js";
     import express from "express";
     const router = express.Router();
     
@@ -195,18 +207,20 @@ We will use the following boilerplate:
     
 5. Lastly, we need to specify the paths:
     1. Inside the `app.js` file, we’ll set the path where the router is called.
-    By setting it to `/test` when the user navigates to `localhost:3000/test` the router will be called
+    <br>By setting it to `/test` when the user navigates to `localhost:3000/test` the router will be called
         
         ```js
         // ./app.js
-        // ...
+
+        // import routers
         import testRouter from './routes/test.js';
-        // ...
+        ...
+        // set routes
         app.use('/test', testRouter);
         ```
         
-        Inside the `routes/test.js` file, we’ll set a path.
-        By only setting `/` , when the user navigates to `localhost:3000/test` the `testPage` function will be called
+    2. Inside the `routes/test.js` file, we’ll set a path.
+    <br>By only setting `/` , when the user navigates to `localhost:3000/test` the `testPage` function will be called
         
         ```js
         // ./routes/test.js
@@ -214,15 +228,16 @@ We will use the following boilerplate:
         import express from "express";
         const router = express.Router();
         
+        // Set a path 👇
         router.get('/', TestController.testPage);
         
         export default router;
         ```
-        
+6. Now we can navigate to `localhost:3000/test` to see the `test.ejs` page we made at step 1
 
-## Example: creating a new path inside a router
+### Creating a new path inside a router
 
-1. Create a `foo.ejs` file inside the `views` folder, with the following boilerplate:
+1. Create a `foo.ejs` file inside the `views` folder, with the following code:
     
     ```html
     <!-- ./views/foo.ejs -->
@@ -232,6 +247,9 @@ We will use the following boilerplate:
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- More info about global.css at the Customization section -->
+        <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Foo inside test</title>
     </head>
     <body>
@@ -240,9 +258,8 @@ We will use the following boilerplate:
     </html>
     ```
     
-    Let’s add this file inside the `test` router, so we can access it at: `localhost:3000/test/foo`
-    
-2. We’ll have to create a new function inside the `TestController.js`
+2. Let’s add this file inside the `test` router, so we can access it at: `localhost:3000/test/foo`
+   <br>We’ll have to create a new function inside the `TestController.js`
     
     ```js
     // ./controllers/TestController.js
@@ -253,13 +270,14 @@ We will use the following boilerplate:
         res.render('test');
     }
     
+    // New function 👇
     async function fooPage(_req, res, _next) {
         res.render('foo');
     }
     
     export default {
         testPage,
-        fooPage    // <---- function is also exported
+        fooPage    // <- function is also exported
     }
     ```
     
@@ -272,12 +290,13 @@ We will use the following boilerplate:
     const router = express.Router();
     
     router.get('/', TestController.testPage);
+    // New path 👇
     router.get('/foo', TestController.fooPage);
     
     export default router;
     ```
     
-    ℹ️ We can see that we only set `/foo`, this is because we are inside the `/test` router, which we set in the previous example at step 5.a.
+    ℹ️ We can see that we only set `/foo`, this is because we are inside the `/test` router, which we set in the previous example at step 5.i.
     
 
-Now we can navigate to `localhost:3000/test/foo` to see the page we made at step 1
+4. Now we can navigate to `localhost:3000/test/foo` to see the `foo.ejs` page we made at step 1

@@ -5,6 +5,7 @@ import logger from "morgan";
 import path from "path";
 import { fileURLToPath } from 'url';
 
+// import routers
 import indexRouter from "./routes/index.js";
 import dbTestRouter from './routes/db-test.js';
 import errorHandler from "./middlewares/error-handler.js";

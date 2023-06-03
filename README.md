@@ -152,7 +152,7 @@ You can use this checklist once you're familiar with the project.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- More info about global.css at the Customization section -->
+        <!-- More info about global.css at the *Client-side CSS/JS* section -->
         <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Test page</title>
     </head>
@@ -248,7 +248,7 @@ You can use this checklist once you're familiar with the project.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- More info about global.css at the Customization section -->
+        <!-- More info about global.css at the *Client-side CSS/JS* section -->
         <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Foo inside test</title>
     </head>

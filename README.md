@@ -83,16 +83,53 @@ We can then use the variables provided inside the .ejs file:
 # Creating a new page
 
 You can use this checklist once you're familiar with the project.
-<br>But if you're just starting out, refer to one of the examples in the next section.
+<br>❗But if you're just starting out, refer to one of the [examples](#examples) in the next section.
 
 ### Use the following checklist when making a new page:
 
 1. Create a new `<page-name>.ejs` file inside the `views` folder
-2. Specify at what path the file should be loaded
+    ```html
+    <!-- ./views/<page-name>.ejs -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel='stylesheet' href='/stylesheets/global.css' />
+        <title>Title</title>
+    </head>
+    <body>
+    </body>
+    </html>
+    ```
+2. Specify at what path the file should be shown
     #### If you’re adding a new path to an existing router:
     
-    1. Create a new function that will render the page, and don't forget to call `res.render('<page-name>')`
+    1. Create a new function that will render the page
+
+        ```js
+        // ./controllers/<controller-name>.js
+        ...
+        async function <function-name>(req, res, next) {
+            // Variables sent to the view
+            res.locals = {};
+            // Name of the .ejs file to show
+            res.render('<page-name>');
+        }
+        ...
+        export default {
+            <function-name> // <- Don't forget to export the function
+        }
+        ```
     2. Specify the path where the function will be called
+        ```js
+        // ./routes/<router-name>.js
+        ...
+        router.get('/<path>', <controller-name>.<function-name>);
+        ...
+        ```
     ---
     
     #### If you’re making a new router:
@@ -106,35 +143,43 @@ You can use this checklist once you're familiar with the project.
         
         export default router;
         ```
-        
-    2. Create a new `<controller-name>.js` file inside the `controllers` folder
 
-    3. Import the controller inside the router
-        
-        ```js
-        // ./routes/test.js
-        import ControllerName from "../controllers/ControllerName.js";
-        import express from "express";
-        const router = express.Router();
-        
-        export default router;
-        ```
+    2. Specify at what path the controller should be called:
 
-        ℹ️ The `ControllerName` in the router file, has to match the one we just created
-        
-    4. Specify the router inside the `app.js` file:
-        
         ```js
         // ./app.js
-        import testRouter from "./routes/test.js";
-        // ...
-        app.use('/test', testRouter);
-        // ...
+
+        // import routers
+        import <router-name> from './routes/<router-name>.js';
+        ...
+        // set routes
+        app.use('/<router-path>', <router-name>);
         ```
+    2. Create a `<controller-name>.js` file in the `controllers` folder, and a new function that will render the page:
+
+        ```js
+        // ./controllers/<controller-name>.js
+        async function <function-name>(req, res, next) {
+            // Variables sent to the view
+            res.locals = {};
+            // Name of the .ejs file to show
+            res.render('<page-name>');
+        }
+
+        export default {
+            <function-name> // <- Don't forget to export the function
+        }
+        ```
+    3. Import the controller and specify the path where the function will be called
         
-        ℹ️ The naming convention used is just a guide. You can use whatever you like
-        
-    5. Create a new function that will render the page inside the controller, and call `res.render('<page-name>')`
+        ```js
+        // ./routes/<router-name>.js
+        // Controller import 👇
+        import <controller-name> from "../controllers/<controller-name>.js";
+        ...
+        router.get('/<path>', <controller-name>.<function-name>);
+        ...
+        ```
 
 ## Examples
 
@@ -259,7 +304,7 @@ You can use this checklist once you're familiar with the project.
     ```
     
 2. Let’s add this file inside the `test` router, so we can access it at: `localhost:3000/test/foo`
-   <br>We’ll have to create a new function inside the `TestController.js`
+   <br>In order to do that, we’ll have to create a new function inside the `TestController.js`
     
     ```js
     // ./controllers/TestController.js
@@ -277,7 +322,7 @@ You can use this checklist once you're familiar with the project.
     
     export default {
         testPage,
-        fooPage    // <- function is also exported
+        fooPage    // <- Function is also exported
     }
     ```
     

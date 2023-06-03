@@ -23,7 +23,7 @@ The project uses the MVC pattern where **models** are handled using Sequalize an
 | .eslintrc.json | ESLint configuration |
 | app.js | Initializes Express. This file is also used to initialize routers |
 
-# Setup
+# Project setup
 
 The setup process is pretty simple. All you have to do is:
 
@@ -44,7 +44,11 @@ For now, let’s use the **test:nm** command.
 
 If everything works correctly, the message *Server started at http://localhost:3000* should appear in the console, and you should be able to test the site.
 
-# How MVC works
+
+
+# General info
+
+### How MVC works
 
 The path of the request is as follows:
 
@@ -80,8 +84,6 @@ This function checks if the User table exists. This is just a dummy test to chec
 We can then use the variables provided inside the .ejs file:
 `… <% if (connected) { %> …`
 
-# something
-
 ### .env files
 An .env file is a text file used in application development to store configuration variables. It contains key-value pairs, often used for sensitive or environment-specific information such as API keys or database credentials.
 <br> These variables are only available in server-side code, but since our backend handles the rendering of pages, they are also available inside ejs files.
@@ -103,6 +105,7 @@ This function takes a JavaScript `Error` object, and passes it's message to the 
 When something goes wrong, and you want to tell the user that there has been an error,
 you can do so, by throwing a new `PageError` with a message, and a status code.
 <br> For example:
+
 ```js
 // ./middlewares/undefined-page.js
 import { PageError } from "../utils/custom-errors.js";
@@ -113,17 +116,25 @@ export default function undefinedPage(req, _res) {
     throw new PageError(`Page '${req.path}' does not exist`, StatusCodes.NOT_FOUND);
 }
 ```
+
 If you want, you can make more cunstom errors inside the `./utils/custom-errors.js` file.
 
 ### Debugging
 In order to start the server in debug mode, go inside the `./package.json` file, hover over the script that you want to run, and click `Debug Script`:
-<br>![NPM script debugging](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/9af53e78-389a-44d9-aaf1-b9b1785ee770)
+<br> ![NPM script debugging](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/9af53e78-389a-44d9-aaf1-b9b1785ee770)
 
 If that method isn't working, you can do the following: 
 <br>
 Inside VSCode select the `Start project` configuration at the Debugging tab. This will start the server with a debugger attached.
 
 After which you can add a breakpoint anywhere in the code.
+
+### ESLint
+> ESLint statically analyzes your code to quickly find problems. It is built into most text editors and you can run ESLint as part of your continuous integration pipeline. <br> ~ https://eslint.org/
+
+The project contains an `.eslintrc.json` file, that specifies what common mistakes should VSCode tell you about.
+
+In order for this to work, make sure that you have the `ESLint` extension: [link](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
 # Creating a new page
 

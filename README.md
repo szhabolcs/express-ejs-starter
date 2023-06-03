@@ -80,6 +80,51 @@ This function checks if the User table exists. This is just a dummy test to chec
 We can then use the variables provided inside the .ejs file:
 `… <% if (connected) { %> …`
 
+# something
+
+### .env files
+An .env file is a text file used in application development to store configuration variables. It contains key-value pairs, often used for sensitive or environment-specific information such as API keys or database credentials.
+<br> These variables are only available in server-side code, but since our backend handles the rendering of pages, they are also available inside ejs files.
+
+They can be accessed using `process.env.<varibale-name>`, for example:
+```js
+// ./db/config.js
+...
+process.env.DB_NAME,
+process.env.DB_USERNAME,
+process.env.DB_PASSWORD,
+...
+```
+
+### Middlewares and error handling
+When an error occurs, it's handled by the `errorHandler` function inside the `./middlewares/error-handler.js` file.
+This function takes a JavaScript `Error` object, and passes it's message to the `error.ejs` view.
+
+When something goes wrong, and you want to tell the user that there has been an error,
+you can do so, by throwing a new `PageError` with a message, and a status code.
+<br> For example:
+```js
+// ./middlewares/undefined-page.js
+import { PageError } from "../utils/custom-errors.js";
+import { StatusCodes } from "http-status-codes";
+
+export default function undefinedPage(req, _res) {
+    // throws an error, this will be caught by the errorHandler middleware
+    throw new PageError(`Page '${req.path}' does not exist`, StatusCodes.NOT_FOUND);
+}
+```
+If you want, you can make more cunstom errors inside the `./utils/custom-errors.js` file.
+
+### Debugging
+In order to start the server in debug mode, go inside the `./package.json` file, hover over the script that you want to run, and click `Debug Script`:
+
+
+If that method isn't working, you can do the following: 
+<br>
+Inside VSCode select the `Start project` configuration at the Debugging tab. This will start the server with a debugger attached.
+
+After which you can add a breakpoint anywhere in the code.
+
 # Creating a new page
 
 You can use this checklist once you're familiar with the project.

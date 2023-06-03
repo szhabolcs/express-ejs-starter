@@ -1,11 +1,11 @@
 {
-  "name": "twitter-clone",
+  "name": "express-ejs-starter",
   "version": "0.0.0",
   "type": "module",
   "private": true,
   "scripts": {
     "start": "node ./bin/server",
-    "test": "cross-env DEBUG=twitter-clone:server node ./bin/server",
+    "test": "cross-env DEBUG=server:debug node ./bin/server",
     "test:nm": "nodemon ./bin/server"
   },
   "dependencies": {

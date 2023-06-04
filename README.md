@@ -9,7 +9,7 @@ The project uses the MVC pattern where **models** are handled using Sequalize an
 
 | Folder/File | Description |
 | --- | --- |
-| .vscode | Contains the launch.json file, which creates a run configuration. <br> See more at DEBUGGING_HEADING |
+| .vscode | Contains the launch.json file, which creates a run configuration. <br> See more at [Debugging](#debugging) |
 | bin | Contains the server.js file, which starts the an HTTP server |
 | controllers | Functions that handle HTTP requests <br> Each file representing a page, or an API endpoint |
 | db | Contains the Sequalize config |

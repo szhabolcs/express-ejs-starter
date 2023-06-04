@@ -216,6 +216,20 @@ async function findByFirstName(name) {
 
 Every interaction with the database should be inside a model. This way, we separate the business logic (a.k.a. what the app is doing) from the database operations. This leads to more readable code, and reusable functions.
 
+### Client-side CSS and JavaScript
+
+If you want to use CSS and/or JavaScript inside a page, you can do so by creating a new file inside the `./public` folder, and adding it to the page.
+
+The project provides several useful CSS files by default:
+| Name | Description |
+| ---- | ----------- |
+| `./stylesheets/global.css` | It imports fonts, includes a [CSS Reset](https://en.wikipedia.org/wiki/Reset_style_sheet), and adds some basic styling to the page |
+| `./stylesheets/colors.css` | Defines colors that you use inside the app, using [CSS Variables](https://www.w3schools.com/css/css3_variables.asp). It also provides easy dark/light theme customization, by first, setting the colors inside the first block, and then overriding them for a light theme in the second. <br> Theme selection is based on the [user's machine](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme). You can read more about this approach [here](https://dev.to/laurilllll/how-to-create-dark-mode-using-only-css-2cb4)
+
+For an example on how to add CSS and JavaScript to a view, check the `./views/index.ejs` file.
+
+ℹ️ As a rule of thumb you should create your CSS/JS files with the same name as the view, to keep things tidy.
+
 # Creating a new page
 
 You can use this checklist once you're familiar with the project.
@@ -333,7 +347,7 @@ You can use this checklist once you're familiar with the project.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- More info about global.css at the *Client-side CSS/JS* section -->
+        <!-- More info about global.css at the *Client-side CSS and JavaScript* section -->
         <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Test page</title>
     </head>
@@ -429,7 +443,7 @@ You can use this checklist once you're familiar with the project.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- More info about global.css at the *Client-side CSS/JS* section -->
+        <!-- More info about global.css at the *Client-side CSS and JavaScript* section -->
         <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Foo inside test</title>
     </head>

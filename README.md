@@ -136,6 +136,100 @@ The project contains an `.eslintrc.json` file, that specifies what common mistak
 
 In order for this to work, make sure that you have the `ESLint` extension: [link](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
+### Sequalize and databases
+The project is configured with the Sequalize ORM, but can be modified to use any other ORM or database driver directly (like mysql2, etc).
+
+Sequalize makes it easy to work with a database, since you don't have to deal with SQL scripts if you don't want to. It even creates the tables for you, based on the configuration you provided.
+
+To get started you can modify the `./db/config.js` file, or the `.env` file.
+```js
+return new Sequelize(
+        process.env.DB_NAME,
+        process.env.DB_USERNAME,
+        process.env.DB_PASSWORD,
+        {
+            host: process.env.DB_HOST,
+            dialect: process.env.DB_SEQUALIZE_DIALECT,
+            pool: {
+                max: 5,
+                min: 0,
+                idle: 10000
+            },
+            storage: "./db/database.sqlite"
+        }
+    );
+```
+The project is set up using SQLite, which is a database that lives on the disk, so you don't need to use a server for it. You can use MYSQL, ORACLE, MSSQL or any other database.
+<br>For example, you can use it with [mysql](https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#mysql).
+
+After you're done setting up your database, you need to create some models.
+
+In the context of our project structure, models are JavaScript files that describe how the table should look like, and export functions that manipulate that table.
+<br>For example, take the provided `UserModel.js` file
+
+```js
+import { DataTypes } from "sequelize";          // We import the datatypes
+import { getClient } from "../db/config.js";    
+import logger from "../utils/logging.js";       // We use the provided logging function for pretty printing
+
+const sequelize = getClient();                  // We get a client instance
+
+// We define the table
+const User = sequelize.define('User', {    // CREATE TABLE `User`
+    // Model attributes are defined here
+    firstName: {                           // `firstName` VARCHAR(255) NOT NULL
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    lastName: {                            // `lastName` VARCHAR(255)
+        type: DataTypes.STRING
+        // allowNull defaults to true
+    }
+}, { "tableName": "User" });
+
+await User.sync();                       // Syncing makes sure the table is added to the database
+
+async function tableExists() {
+    const tableNames = await sequelize.getQueryInterface().showAllTables();
+    logger.debug(tableNames);
+    
+    return tableNames.includes('User');
+}
+
+export default {
+    tableExists
+}
+```
+In this example, we can see that we export the `tableExists` function, but for example, we could have a `findByFirstName` function like so:
+
+```js
+async function findByFirstName(name) {
+    const users = await User.findAll({
+        where: {
+            firstName: name
+        }
+    });
+
+    return users;
+}
+```
+
+Every interaction with the database should be inside a model. This way, we separate the business logic (a.k.a. what the app is doing) from the database operations. This leads to more readable code, and reusable functions.
+
+### Client-side CSS and JavaScript
+
+If you want to use CSS and/or JavaScript inside a page, you can do so by creating a new file inside the `./public` folder, and adding it to the page.
+
+The project provides several useful CSS files by default:
+| Name | Description |
+| ---- | ----------- |
+| `./stylesheets/global.css` | It imports fonts, includes a [CSS Reset](https://en.wikipedia.org/wiki/Reset_style_sheet), and adds some basic styling to the page |
+| `./stylesheets/colors.css` | Defines colors that you use inside the app, using [CSS Variables](https://www.w3schools.com/css/css3_variables.asp). It also provides easy dark/light theme customization, by first, setting the colors inside the first block, and then overriding them for a light theme in the second. <br> Theme selection is based on the [user's machine](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme). You can read more about this approach [here](https://dev.to/laurilllll/how-to-create-dark-mode-using-only-css-2cb4)
+
+For an example on how to add CSS and JavaScript to a view, check the `./views/index.ejs` file.
+
+ℹ️ As a rule of thumb you should create your CSS/JS files with the same name as the view, to keep things tidy.
+
 # Creating a new page
 
 You can use this checklist once you're familiar with the project.
@@ -253,7 +347,7 @@ You can use this checklist once you're familiar with the project.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- More info about global.css at the *Client-side CSS/JS* section -->
+        <!-- More info about global.css at the *Client-side CSS and JavaScript* section -->
         <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Test page</title>
     </head>
@@ -349,7 +443,7 @@ You can use this checklist once you're familiar with the project.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- More info about global.css at the *Client-side CSS/JS* section -->
+        <!-- More info about global.css at the *Client-side CSS and JavaScript* section -->
         <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Foo inside test</title>
     </head>

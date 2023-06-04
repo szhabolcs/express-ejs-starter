@@ -23,7 +23,7 @@ The project uses the MVC pattern where **models** are handled using Sequalize an
 | .eslintrc.json | ESLint configuration |
 | app.js | Initializes Express. This file is also used to initialize routers |
 
-# Setup
+# Project setup
 
 The setup process is pretty simple. All you have to do is:
 
@@ -44,7 +44,11 @@ For now, let’s use the **test:nm** command.
 
 If everything works correctly, the message *Server started at http://localhost:3000* should appear in the console, and you should be able to test the site.
 
-# How MVC works
+
+
+# General info
+
+### How MVC works
 
 The path of the request is as follows:
 
@@ -80,61 +84,164 @@ This function checks if the User table exists. This is just a dummy test to chec
 We can then use the variables provided inside the .ejs file:
 `… <% if (connected) { %> …`
 
+### .env files
+An .env file is a text file used in application development to store configuration variables. It contains key-value pairs, often used for sensitive or environment-specific information such as API keys or database credentials.
+<br> These variables are only available in server-side code, but since our backend handles the rendering of pages, they are also available inside ejs files.
+
+They can be accessed using `process.env.<varibale-name>`, for example:
+```js
+// ./db/config.js
+...
+process.env.DB_NAME,
+process.env.DB_USERNAME,
+process.env.DB_PASSWORD,
+...
+```
+
+### Middlewares and error handling
+When an error occurs, it's handled by the `errorHandler` function inside the `./middlewares/error-handler.js` file.
+This function takes a JavaScript `Error` object, and passes it's message to the `error.ejs` view.
+
+When something goes wrong, and you want to tell the user that there has been an error,
+you can do so, by throwing a new `PageError` with a message, and a status code.
+<br> For example:
+
+```js
+// ./middlewares/undefined-page.js
+import { PageError } from "../utils/custom-errors.js";
+import { StatusCodes } from "http-status-codes";
+
+export default function undefinedPage(req, _res) {
+    // throws an error, this will be caught by the errorHandler middleware
+    throw new PageError(`Page '${req.path}' does not exist`, StatusCodes.NOT_FOUND);
+}
+```
+
+If you want, you can make more cunstom errors inside the `./utils/custom-errors.js` file.
+
+### Debugging
+In order to start the server in debug mode, go inside the `./package.json` file, hover over the script that you want to run, and click `Debug Script`:
+<br> ![NPM script debugging](https://github.com/szhabolcs/express-ejs-starter/assets/54114237/9af53e78-389a-44d9-aaf1-b9b1785ee770)
+
+If that method isn't working, you can do the following: 
+<br>
+Inside VSCode select the `Start project` configuration at the Debugging tab. This will start the server with a debugger attached.
+
+After which you can add a breakpoint anywhere in the code.
+
+### ESLint
+> ESLint statically analyzes your code to quickly find problems. It is built into most text editors and you can run ESLint as part of your continuous integration pipeline. <br> ~ https://eslint.org/
+
+The project contains an `.eslintrc.json` file, that specifies what common mistakes should VSCode tell you about.
+
+In order for this to work, make sure that you have the `ESLint` extension: [link](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
+
 # Creating a new page
 
-Use the following checklist when making a new page:
+You can use this checklist once you're familiar with the project.
+<br>❗But if you're just starting out, refer to one of the [examples](#examples) in the next section.
 
-- [ ]  Create a new `ejs` file inside the `views` folder
-- [ ]  Specify at what path the file should be loaded
+### Use the following checklist when making a new page:
+
+1. Create a new `<page-name>.ejs` file inside the `views` folder
+    ```html
+    <!-- ./views/<page-name>.ejs -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel='stylesheet' href='/stylesheets/global.css' />
+        <title>Title</title>
+    </head>
+    <body>
+    </body>
+    </html>
+    ```
+2. Specify at what path the file should be shown
+    #### If you’re adding a new path to an existing router:
     
-    If you’re adding a new path to a router:
+    1. Create a new function that will render the page
+
+        ```js
+        // ./controllers/<controller-name>.js
+        ...
+        async function <function-name>(req, res, next) {
+            // Variables sent to the view
+            res.locals = {};
+            // Name of the .ejs file to show
+            res.render('<page-name>');
+        }
+        ...
+        export default {
+            <function-name> // <- Don't forget to export the function
+        }
+        ```
+    2. Specify the path where the function will be called
+        ```js
+        // ./routes/<router-name>.js
+        ...
+        router.get('/<path>', <controller-name>.<function-name>);
+        ...
+        ```
+    ---
     
-    - [ ]  Create a new function that will render the page inside the desired router’s controller, and call `res.render('<page-name>')`
-    - [ ]  Specify the previous function inside the router, at the desired path
+    #### If you’re making a new router:
     
-    If you’re making a new router:
-    
-    - [ ]  Create a new `js` file inside the routes folder, with the following boilerplate:
+    1. Create a new `<router-name>.js` file inside the `routes` folder, with the following code:
         
         ```js
-        // ./routes/test.js
+        // ./routes/<router-name>.js
         import express from "express";
         const router = express.Router();
         
         export default router;
         ```
-        
-    - [ ]  Create a new `js` file inside the controllers folder
-    - [ ]  Import the controller inside the router
-        
-        ```js
-        // ./routes/test.js
-        import ControllerName from "../controllers/ControllerName.js";
-        import express from "express";
-        const router = express.Router();
-        
-        export default router;
-        ```
-        
-        ℹ️ The `ControllerName` in the router file, has to match the one we just created
-        
-    - [ ]  Specify the router inside the `app.js` file:
-        
+
+    2. Specify at what path the controller should be called:
+
         ```js
         // ./app.js
-        import testRouter from "./routes/test.js";
-        // ...
-        app.use('/test', testRouter);
-        // ...
+
+        // import routers
+        import <router-name> from './routes/<router-name>.js';
+        ...
+        // set routes
+        app.use('/<router-path>', <router-name>);
         ```
-        
-        ℹ️ The naming convention used is just a guide. You can use whatever you like
-        
-    - [ ]  Create a new function that will render the page inside the controller, and call `res.render('<page-name>')`
+    2. Create a `<controller-name>.js` file in the `controllers` folder, and a new function that will render the page:
 
-## Example: creating a new router
+        ```js
+        // ./controllers/<controller-name>.js
+        async function <function-name>(req, res, next) {
+            // Variables sent to the view
+            res.locals = {};
+            // Name of the .ejs file to show
+            res.render('<page-name>');
+        }
 
-1. Create a `test.ejs` file inside the `views` folder, with the following boilerplate:
+        export default {
+            <function-name> // <- Don't forget to export the function
+        }
+        ```
+    3. Import the controller and specify the path where the function will be called
+        
+        ```js
+        // ./routes/<router-name>.js
+        // Controller import 👇
+        import <controller-name> from "../controllers/<controller-name>.js";
+        ...
+        router.get('/<path>', <controller-name>.<function-name>);
+        ...
+        ```
+
+## Examples
+
+### Creating a new router
+
+1. Create a `test.ejs` file inside the `views` folder, with the following code:
 <br> ℹ️ Using `<%= message %>` the page expects the controller to set a variable called `message`, check step 3 
     
     ```html
@@ -145,6 +252,9 @@ Use the following checklist when making a new page:
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- More info about global.css at the *Client-side CSS/JS* section -->
+        <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Test page</title>
     </head>
     <body>
@@ -153,7 +263,7 @@ Use the following checklist when making a new page:
     </html>
     ```
     
-2. Create a `test.js` file inside the `routes` folder, with the following boilerplate:
+2. Create a `test.js` file inside the `routes` folder, with the following code:
     
     ```js
     // ./routes/test.js
@@ -163,15 +273,17 @@ Use the following checklist when making a new page:
     export default router;
     ```
     
-3. Create a `TestController.js` file inside the `controllers` folder.
-We will use the following boilerplate:
+3. Create a `TestController.js` file inside the `controllers` folder, with the following code:
     
     ```js
     // ./controllers/TestController.js
-    async function testPage(_req, res, _next) {
+    async function testPage(req, res, next) {
+        // variables sent to the view
         res.locals = {
             message: "Hello World!"
         };
+
+        // name of the .ejs file to show
         res.render('test');
     }
     
@@ -186,7 +298,8 @@ We will use the following boilerplate:
     
     ```js
     // ./routes/test.js
-    import testController from "../controllers/TestController.js";
+    // Controller import 👇
+    import TestController from "../controllers/TestController.js";
     import express from "express";
     const router = express.Router();
     
@@ -195,18 +308,20 @@ We will use the following boilerplate:
     
 5. Lastly, we need to specify the paths:
     1. Inside the `app.js` file, we’ll set the path where the router is called.
-    By setting it to `/test` when the user navigates to `localhost:3000/test` the router will be called
+    <br>By setting it to `/test` when the user navigates to `localhost:3000/test` the router will be called
         
         ```js
         // ./app.js
-        // ...
+
+        // import routers
         import testRouter from './routes/test.js';
-        // ...
+        ...
+        // set routes
         app.use('/test', testRouter);
         ```
         
-        Inside the `routes/test.js` file, we’ll set a path.
-        By only setting `/` , when the user navigates to `localhost:3000/test` the `testPage` function will be called
+    2. Inside the `routes/test.js` file, we’ll set a path.
+    <br>By only setting `/` , when the user navigates to `localhost:3000/test` the `testPage` function will be called
         
         ```js
         // ./routes/test.js
@@ -214,15 +329,16 @@ We will use the following boilerplate:
         import express from "express";
         const router = express.Router();
         
+        // Set a path 👇
         router.get('/', TestController.testPage);
         
         export default router;
         ```
-        
+6. Now we can navigate to `localhost:3000/test` to see the `test.ejs` page we made at step 1
 
-## Example: creating a new path inside a router
+### Creating a new path inside a router
 
-1. Create a `foo.ejs` file inside the `views` folder, with the following boilerplate:
+1. Create a `foo.ejs` file inside the `views` folder, with the following code:
     
     ```html
     <!-- ./views/foo.ejs -->
@@ -232,6 +348,9 @@ We will use the following boilerplate:
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- More info about global.css at the *Client-side CSS/JS* section -->
+        <link rel='stylesheet' href='/stylesheets/global.css' />
         <title>Foo inside test</title>
     </head>
     <body>
@@ -240,26 +359,26 @@ We will use the following boilerplate:
     </html>
     ```
     
-    Let’s add this file inside the `test` router, so we can access it at: `localhost:3000/test/foo`
-    
-2. We’ll have to create a new function inside the `TestController.js`
+2. Let’s add this file inside the `test` router, so we can access it at: `localhost:3000/test/foo`
+   <br>In order to do that, we’ll have to create a new function inside the `TestController.js`
     
     ```js
     // ./controllers/TestController.js
-    async function testPage(_req, res, _next) {
+    async function testPage(req, res, next) {
         res.locals = {
             message: "Hello World!"
         };
         res.render('test');
     }
     
-    async function fooPage(_req, res, _next) {
+    // New function 👇
+    async function fooPage(req, res, next) {
         res.render('foo');
     }
     
     export default {
         testPage,
-        fooPage    // <---- function is also exported
+        fooPage    // <- Function is also exported
     }
     ```
     
@@ -272,12 +391,13 @@ We will use the following boilerplate:
     const router = express.Router();
     
     router.get('/', TestController.testPage);
+    // New path 👇
     router.get('/foo', TestController.fooPage);
     
     export default router;
     ```
     
-    ℹ️ We can see that we only set `/foo`, this is because we are inside the `/test` router, which we set in the previous example at step 5.a.
+    ℹ️ We can see that we only set `/foo`, this is because we are inside the `/test` router, which we set in the previous example at step 5.i.
     
 
-Now we can navigate to `localhost:3000/test/foo` to see the page we made at step 1
+4. Now we can navigate to `localhost:3000/test/foo` to see the `foo.ejs` page we made at step 1

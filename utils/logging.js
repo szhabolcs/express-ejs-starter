@@ -1,5 +1,5 @@
 import Debug from "debug";
-export const debug = Debug("twitter-clone:server");
+export const debug = Debug("server:debug");
 
 const logger = { debug };
 
